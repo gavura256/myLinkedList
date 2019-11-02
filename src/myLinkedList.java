@@ -1,3 +1,5 @@
+import java.util.NoSuchElementException;
+
 public class myLinkedList<E> implements myList<E> {
 
     private Node<E> firstNode;
@@ -6,17 +8,33 @@ public class myLinkedList<E> implements myList<E> {
 
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 
     @Override
     public void addFirstElement(E element) {
-
+        Node<E> newNode = new Node<>(element, null, null);
+        if (this.firstNode == null) {
+            this.firstNode = newNode;
+            this.lastNode = newNode;
+        } else {
+            newNode.setNextElement(this.firstNode);
+            this.firstNode.setPrevElement(newNode);
+            this.firstNode = newNode;
+        }
     }
 
     @Override
     public void addLastElement(E element) {
-
+        Node<E> newNode = new Node<>(element, null, null);
+        if (this.lastNode == null) {
+            this.firstNode = newNode;
+            this.lastNode = newNode;
+        } else {
+            newNode.setPrevElement(this.lastNode);
+            this.lastNode.setNextElement(newNode);
+            this.lastNode = newNode;
+        }
     }
 
     @Override
@@ -26,17 +44,35 @@ public class myLinkedList<E> implements myList<E> {
 
     @Override
     public E getFirstElement() {
-        return null;
+        if (this.firstNode == null) {
+            throw new NoSuchElementException();
+        } else {
+            return this.firstNode.getData();
+        }
     }
 
     @Override
     public E getLastElement() {
-        return null;
+        if (this.lastNode == null) {
+            throw new NoSuchElementException();
+        }
+        return this.lastNode.getData();
     }
 
     @Override
     public E removeFirstElement() {
-        return null;
+        if (this.firstNode == null) {           //There is nothing in the list
+            throw new NoSuchElementException();
+        }
+        E element = firstNode.getData();
+        if (this.firstNode == this.lastNode) {  //There is one element in the list
+            this.firstNode = null;
+            this.lastNode = null;
+        } else {                                //There are two or more elements in the list
+            firstNode = firstNode.getNextElement();
+            firstNode.setPrevElement(null);
+        }
+        return element;
     }
 
     @Override
@@ -50,37 +86,37 @@ public class myLinkedList<E> implements myList<E> {
     }
 
     private class Node<N> {
-        private E currentElement; // The data stored at the node
-        private Node<E> nextElement;// The link to the next node or null
-        private Node<E> prevElement;// The link to the previous node or null
+        private N data; // The data stored at the node
+        private Node<N> nextElement;// The link to the next node or null
+        private Node<N> prevElement;// The link to the previous node or null
 
-        Node(E currentElement, Node<E> prevElement, Node<E> nextElement) {
-            this.currentElement = currentElement;
+        Node(N data, Node<N> prevElement, Node<N> nextElement) {
+            this.data = data;
             this.nextElement = nextElement;
             this.prevElement = prevElement;
         }
 
-        public E getCurrentElement() {
-            return currentElement;
+        public N getData() {
+            return data;
         }
 
-        public void setCurrentElement(E currentElement) {
-            this.currentElement = currentElement;
+        public void setData(N data) {
+            this.data = data;
         }
 
-        public Node<E> getNextElement() {
+        public Node<N> getNextElement() {
             return nextElement;
         }
 
-        public void setNextElement(Node<E> nextElement) {
+        public void setNextElement(Node<N> nextElement) {
             this.nextElement = nextElement;
         }
 
-        public Node<E> getPrevElement() {
+        public Node<N> getPrevElement() {
             return prevElement;
         }
 
-        public void setPrevElement(Node<E> prevElement) {
+        public void setPrevElement(Node<N> prevElement) {
             this.prevElement = prevElement;
         }
     }
