@@ -69,14 +69,24 @@ public class myLinkedList<E> implements myList<E> {
             this.firstNode = null;
             this.lastNode = null;
         } else {                                //There are two or more elements in the list
-            firstNode = firstNode.getNextElement();
-            firstNode.setPrevElement(null);
+            this.firstNode = this.firstNode.getNextElement();
+            this.firstNode.setPrevElement(null);
         }
         return element;
     }
 
     @Override
     public E removeLastElement() {
+        if (this.lastNode == null) {            //There is nothing in the list
+            throw new NoSuchElementException();
+        }
+        if (this.firstNode == this.lastNode) {    //There is one element in the list
+            this.firstNode = null;
+            this.lastNode = null;
+        } else {                                 //There are two or more elements in the list
+            this.lastNode = this.lastNode.getPrevElement();
+            this.lastNode.setNextElement(null);
+        }
         return null;
     }
 
@@ -120,7 +130,33 @@ public class myLinkedList<E> implements myList<E> {
             this.prevElement = prevElement;
         }
     }
+    private class myLinkedListIterator implements myListIterator<E>{
 
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        @Override
+        public E next() {
+            return null;
+        }
+
+        @Override
+        public void add(E element) {
+
+        }
+
+        @Override
+        public E remove() {
+            return null;
+        }
+
+        @Override
+        public void set(E element) {
+
+        }
+    }
     public myLinkedList() {
         this.firstNode = new Node<>(null, null, lastNode);
         this.lastNode = new Node<>(null, firstNode, null);
