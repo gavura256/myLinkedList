@@ -1,11 +1,13 @@
-import java.util.LinkedList;
-
 public class Main {
 
     public static void main(String[] args) {
         // write your code here
-        myList<Integer> list = new myLinkedList<>();
+        List list = new LinkedList();
         list.addFirstElement(12);
-        System.out.println(list.removeFirstElement());
+        list.addFirstElement(12);
+        System.out.println(list.get(0));
+
+
     }
 }
+
