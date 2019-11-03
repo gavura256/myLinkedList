@@ -58,7 +58,7 @@ public class LinkedList implements List {
             if (index == count) {
                 return element;
             }
-            count++;
+            ++count;
         }
         throw new NoSuchElementException();//index was larger than list size.
     }
