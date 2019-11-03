@@ -1,6 +1,6 @@
 import java.util.NoSuchElementException;
 
-public class LinkedList<T> implements List {
+public class LinkedList implements List {
 
     private Node firstNode;
     private Node lastNode;
