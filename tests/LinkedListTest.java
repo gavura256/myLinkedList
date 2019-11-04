@@ -231,6 +231,46 @@ public class LinkedListTest {
     }
 
     @Test
-    public void remove(){}
+    public void remove() {
+        List list = new LinkedList();
+
+        Integer first = 1;
+        Integer second = 2;
+        Integer third = 3;
+        Integer fifth = 4;
+        list.addFirstElement(first);
+        list.addFirstElement(second);
+        list.addFirstElement(third);
+        list.addFirstElement(fifth);
+
+        //order is [4 , 3 , 2 , 1]
+
+        ListIterator i = list.getIterator();
+        assertTrue(i.hasNext());
+        try {
+            i.remove();
+            fail("Error, cause we didn't call next before remove()");
+        } catch (IllegalStateException e) {//ok!
+            e.printStackTrace();
+        }
+        assertSame(fifth, i.next());
+        assertSame(fifth, i.remove());
+        assertTrue(i.hasNext());
+        try {
+            i.remove();
+            fail("Error, cause we didn't call next() before remove()");
+        } catch (IllegalStateException e) {//ok!
+            e.printStackTrace();
+        }
+        assertSame(third, i.next());
+        assertSame(third, i.remove());
+        assertTrue(i.hasNext());
+        assertSame(second, i.next());
+        assertSame(second, i.remove());
+        assertTrue(i.hasNext());
+        assertSame(first, i.next());
+        assertSame(first, i.remove());
+        assertFalse(i.hasNext()); // The list is empty
+    }
 
 }
