@@ -7,9 +7,8 @@ public class LinkedList implements List {
 
 
     LinkedList() { //Constructs an empty LinkedList
-        this.firstNode = new Node(null, null, lastNode);
-        this.lastNode = new Node(null, firstNode, null);
-
+        this.lastNode = null;
+        this.firstNode = null;
     }
 
     @Override
@@ -85,7 +84,7 @@ public class LinkedList implements List {
         if (this.firstNode == null) {           //There is nothing in the list
             throw new NoSuchElementException();
         }
-        Object element = firstNode.getData();
+        Object element = this.firstNode.getData();
         if (this.firstNode == this.lastNode) {  //There is one element in the list
             this.firstNode = null;
             this.lastNode = null;
@@ -101,6 +100,7 @@ public class LinkedList implements List {
         if (this.lastNode == null) {            //There is nothing in the list
             throw new NoSuchElementException();
         }
+        Object element = this.lastNode.getData();
         if (this.firstNode == this.lastNode) {    //There is one element in the list
             this.firstNode = null;
             this.lastNode = null;
@@ -108,7 +108,7 @@ public class LinkedList implements List {
             this.lastNode = this.lastNode.getPrevElement();
             this.lastNode.setNextElement(null);
         }
-        return null;
+        return element;
     }
 
     @Override
@@ -122,6 +122,7 @@ public class LinkedList implements List {
         private Node prevElement;// The link to the previous node or null
 
         Node(Object data, Node prevElement, Node nextElement) {
+            super();
             this.data = data;
             this.nextElement = nextElement;
             this.prevElement = prevElement;
@@ -173,64 +174,64 @@ public class LinkedList implements List {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             } else {
-                pre = post;
-                post = post.getNextElement();
-                isAfterNext = true;
-                return pre.getData();
+                this.pre = this.post;
+                this.post = this.post.getNextElement();
+                this.isAfterNext = true;
+                return this.pre.getData();
             }
         }
 
         @Override
         public void add(Object element) {
-            if (pre == null) { // Empty list
+            if (this.pre == null) { // Empty list
                 addFirstElement(element);
-                pre = firstNode;
-                post = firstNode.getNextElement();
-            } else if (post == null) {
+                this.pre = firstNode;
+                this.post = firstNode.getNextElement();
+            } else if (this.post == null) {
                 addLastElement(element);
-                pre = lastNode;
-                post = lastNode.getNextElement();
+                this.pre = lastNode;
+                this.post = lastNode.getNextElement();
             } else {
-                Node newNode = new Node(element, pre, post);
-                pre.setNextElement(newNode);
-                post.setPrevElement(newNode);
-                pre = newNode;
+                Node newNode = new Node(element, this.pre, this.post);
+                this.pre.setNextElement(newNode);
+                this.post.setPrevElement(newNode);
+                this.pre = newNode;
             }
         }
 
         @Override
         public Object remove() {
-            if (!isAfterNext) {
+            if (!this.isAfterNext) {
                 throw new IllegalStateException();
             }
-            Object element = pre.getData();
+            Object element = this.pre.getData();
             if (firstNode == lastNode) {//There is one element in the list
-                pre = null;
-                post = null;
+                this.pre = null;
+                this.post = null;
                 firstNode = null;
                 lastNode = null;
-            } else if (pre == firstNode) {//Removes the first element
+            } else if (this.pre == firstNode) {//Removes the first element
                 removeFirstElement();
-                pre = null;
-                post = firstNode;
-            } else if (pre == lastNode) {//Removes the last element
+                this.pre = null;
+                this.post = firstNode;
+            } else if (this.pre == lastNode) {//Removes the last element
                 removeLastElement();
-                pre = lastNode;
-                post = null;
+                this.pre = lastNode;
+                this.post = null;
             } else {
-                pre.getPrevElement().setNextElement(post);
-                post.setPrevElement(pre.getPrevElement());
+                this.pre.getPrevElement().setNextElement(this.post);
+                this.post.setPrevElement(this.pre.getPrevElement());
             }
-            isAfterNext = false;
+            this.isAfterNext = false;
             return element;
         }
 
         @Override
         public void set(Object element) {
-            if (!isAfterNext) {
+            if (!this.isAfterNext) {
                 throw new IllegalStateException();
             }
-            pre.setData(element);
+            this.pre.setData(element);
         }
     }
 
