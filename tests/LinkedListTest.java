@@ -22,22 +22,22 @@ public class LinkedListTest {
     public void addFirstElement() {
         List list = new LinkedList();
         list.addFirstElement("Last");
-        assertTrue(list.getFirstElement() == "Last");
-        assertTrue(list.getLastElement() == "Last");
+        assertSame("Last", list.getFirstElement());
+        assertSame("Last", list.getLastElement());
         list.addFirstElement("First");
-        assertTrue(list.getFirstElement() == "First");
-        assertTrue(list.getLastElement() == "Last");
+        assertSame("First", list.getFirstElement());
+        assertSame("Last", list.getLastElement());
     }
 
     @Test
     public void addLastElement() {
         List list = new LinkedList();
         list.addLastElement("First");
-        assertTrue(list.getFirstElement() == "First");
-        assertTrue(list.getLastElement() == "First");
+        assertSame("First", list.getFirstElement());
+        assertSame("First", list.getLastElement());
         list.addLastElement("Last");
-        assertTrue(list.getFirstElement() == "First");
-        assertTrue(list.getLastElement() == "Last");
+        assertSame("First", list.getFirstElement());
+        assertSame("Last", list.getLastElement());
     }
 
     @Test
@@ -112,7 +112,7 @@ public class LinkedListTest {
         ListIterator i = list.getIterator();
         assertNotNull(i);
         assertFalse(i.hasNext());
-        try{
+        try {
             i.next();
             fail("This should throw the exception");
         } catch (NoSuchElementException e) { // ok
@@ -144,15 +144,39 @@ public class LinkedListTest {
         assertSame(i.next(), fifth);
         assertFalse(i.hasNext());
     }
+
     @Test
-    public void testIteratorAdd(){
+    public void testIteratorAdd() {
         List list = new LinkedList();
         Integer first = 1;
         Integer second = 2;
         Integer third = 3;
         Integer fifth = 4;
-        ListIterator i = list.getIterator();
+
+        ListIterator i = list.getIterator();// Adds first element in the empty list and checks [   ] -> [ 2 ]
+
         i.add(second);
+        assertSame(second, list.getFirstElement());
+        assertSame(second,list.getLastElement());
+        assertFalse(i.hasNext());
+
+        i = list.getIterator(); //Go to head add an element after the first  [ 1 ] -> [ 1, 2 ]
+        i.add(first);
+        assertSame(first, list.getFirstElement());
+        assertTrue(i.hasNext());
+        assertSame(second, i.next());
+        assertFalse(i.hasNext());
+
+        i = list.getIterator(); //Go to beginning, skip and  add an 2 elements  [ 3, 4 ] -> [ 1, 2, 3 , 4 ]
+        assertTrue(i.hasNext());
+        assertSame(first, i.next());
+        assertTrue(i.hasNext());
+        assertSame(second, i.next());
+        i.add(third);
+        assertFalse(i.hasNext());
+        i.add(fifth);
+        assertFalse(i.hasNext());
+
     }
 
 }
