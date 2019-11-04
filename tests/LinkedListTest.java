@@ -30,7 +30,6 @@ public class LinkedListTest {
         assertEquals(3, list.size());
         list.addLastElement(fifth);
         assertEquals(4, list.size());
-
     }
 
     @Test
@@ -55,7 +54,6 @@ public class LinkedListTest {
         assertSame("Last", list.getLastElement());
     }
 
-
     @Test
     public void set() {
         List list = new LinkedList();
@@ -74,7 +72,7 @@ public class LinkedListTest {
         try {
             i.set(fifth); //Should be exceptions, cause we didn't use next();
         } catch (IllegalStateException e) {//ok
-            e.printStackTrace();
+            System.out.println("OK");
         }
         i.next();
         i.set(fifth);
@@ -101,6 +99,36 @@ public class LinkedListTest {
 
     @Test
     public void get() {
+        List list = new LinkedList();
+        String first = "First";
+        String second = "Second";
+        String third = "Third";
+        String fifth = "Fifth";
+
+        try {
+            list.get(-1);
+        } catch (NoSuchElementException e) {
+            System.out.println("OK");
+        }
+        try {
+            list.get(0); // Empty list, should be exception
+        } catch (NoSuchElementException e) {
+            System.out.println("OK");
+        }
+        list.addFirstElement(first);
+        assertEquals(first, list.get(0));
+        list.addLastElement(second);
+        assertEquals(second, list.get(1));
+        list.addLastElement(third);
+        assertEquals(third, list.get(2));
+        list.addLastElement(fifth);
+        assertEquals(fifth, list.get(3));
+        try {
+            list.get(4);
+
+        } catch (NoSuchElementException e) {//ok
+            System.out.println("OK");
+        }
     }
 
     @Test
@@ -111,7 +139,7 @@ public class LinkedListTest {
             fail("An exception should be thrown the empty list");
 
         } catch (NoSuchElementException e) {
-            e.printStackTrace();
+            System.out.println("OK");
         }
     }
 
@@ -122,7 +150,7 @@ public class LinkedListTest {
             testList.getLastElement();
             fail("This should throw the exception - empty list");
         } catch (NoSuchElementException e) { //ok
-            e.printStackTrace();
+            System.out.println("OK");
         }
     }
 
@@ -142,7 +170,7 @@ public class LinkedListTest {
             list.removeFirstElement();
             fail("This should throw the exception");
         } catch (NoSuchElementException e) {// ok
-            e.printStackTrace();
+            System.out.println("OK");
         }
     }
 
@@ -161,7 +189,7 @@ public class LinkedListTest {
             list.removeFirstElement();
             fail("This should throw the exception");
         } catch (NoSuchElementException e) { //ok
-            e.printStackTrace();
+            System.out.println("OK");
         }
     }
 
@@ -175,7 +203,7 @@ public class LinkedListTest {
             i.next();
             fail("This should throw the exception");
         } catch (NoSuchElementException e) { // ok
-            e.printStackTrace();
+            System.out.println("OK");
         }
     }
 
@@ -264,18 +292,18 @@ public class LinkedListTest {
         assertTrue(i.hasNext());
         try {
             i.remove();
-            fail("Error, cause we didn't call next before remove()");
+            fail("Exception, cause we didn't call next before remove()");
         } catch (IllegalStateException e) {//ok!
-            e.printStackTrace();
+            System.out.println("OK");
         }
         assertSame(fifth, i.next());
         assertSame(fifth, i.remove());
         assertTrue(i.hasNext());
         try {
             i.remove();
-            fail("Error, cause we didn't call next() before remove()");
+            fail("Exception, cause we didn't call next() before remove()");
         } catch (IllegalStateException e) {//ok!
-            e.printStackTrace();
+            System.out.println("OK");
         }
         assertSame(third, i.next());
         assertSame(third, i.remove());
@@ -287,6 +315,4 @@ public class LinkedListTest {
         assertSame(first, i.remove());
         assertFalse(i.hasNext()); // The list is empty
     }
-
-
 }

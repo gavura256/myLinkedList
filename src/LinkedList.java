@@ -36,7 +36,7 @@ public class LinkedList implements List {
     @Override
     public void addLastElement(Object element) {
         Node newNode = new Node(element, null, null);
-        if (this.lastNode == null) {
+        if (this.lastNode == null) {//Empty list
             this.firstNode = newNode;
             this.lastNode = newNode;
         } else {
