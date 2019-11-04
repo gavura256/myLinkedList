@@ -156,9 +156,9 @@ public class LinkedList implements List {
     private class LinkedListIterator implements ListIterator {
         private Node pre;
         private Node post;
-        private boolean isAfterNext;
+        private boolean isAfterNext;// We'll check if ours methods called after next()
 
-        LinkedListIterator() {
+        LinkedListIterator() { //Default constructor
             this.pre = null;
             this.post = firstNode;
             this.isAfterNext = false;
@@ -187,7 +187,7 @@ public class LinkedList implements List {
                 addFirstElement(element);
                 this.pre = firstNode;
                 this.post = firstNode.getNextElement();
-            } else if (this.post == null) {
+            } else if (this.post == null) {// 1 element in the list
                 addLastElement(element);
                 this.pre = lastNode;
                 this.post = lastNode.getNextElement();
@@ -234,5 +234,4 @@ public class LinkedList implements List {
             this.pre.setData(element);
         }
     }
-
 }
