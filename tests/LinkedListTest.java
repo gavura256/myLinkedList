@@ -16,6 +16,21 @@ public class LinkedListTest {
 
     @Test
     public void size() {
+        List list = new LinkedList();
+        String first = "First";
+        String second = "Second";
+        String third = "Third";
+        String fifth = "Fifth";
+        assertEquals(0, list.size()); // Empty list
+        list.addFirstElement(first);
+        assertEquals(1, list.size());
+        list.addLastElement(second);
+        assertEquals(2, list.size());
+        list.addLastElement(third);
+        assertEquals(3, list.size());
+        list.addLastElement(fifth);
+        assertEquals(4, list.size());
+
     }
 
     @Test
@@ -272,5 +287,6 @@ public class LinkedListTest {
         assertSame(first, i.remove());
         assertFalse(i.hasNext()); // The list is empty
     }
+
 
 }
