@@ -40,6 +40,50 @@ public class LinkedListTest {
         assertSame("Last", list.getLastElement());
     }
 
+
+    @Test
+    public void set() {
+        List list = new LinkedList();
+        String first = "First";
+        String second = "Second";
+        String third = "Third";
+        String fifth = "Fifth";
+
+        list.addFirstElement(first);
+        list.addLastElement(second);
+        list.addLastElement(third);
+        list.addLastElement(fifth);
+
+        //Iterate and reverse the order
+        ListIterator i = list.getIterator();
+        try {
+            i.set(fifth); //Should be exceptions, cause we didn't use next();
+        } catch (IllegalStateException e) {//ok
+            e.printStackTrace();
+        }
+        i.next();
+        i.set(fifth);
+        i.next();
+        i.set(third);
+        i.next();
+        i.set(second);
+        i.next();
+        i.set(first);
+        assertFalse(i.hasNext());
+
+        //Check the order, should be Fifth, Third, Second, First
+        i = list.getIterator();
+        assertTrue(i.hasNext());
+        assertSame(fifth, i.next());
+        assertTrue(i.hasNext());
+        assertSame(third, i.next());
+        assertTrue(i.hasNext());
+        assertSame(second, i.next());
+        assertTrue(i.hasNext());
+        assertSame(first, i.next());
+        assertFalse(i.hasNext());
+    }
+
     @Test
     public void get() {
     }
@@ -62,7 +106,7 @@ public class LinkedListTest {
         try {
             testList.getLastElement();
             fail("This should throw the exception - empty list");
-        } catch (NoSuchElementException e) { //
+        } catch (NoSuchElementException e) { //ok
             e.printStackTrace();
         }
     }
@@ -82,7 +126,7 @@ public class LinkedListTest {
         try {
             list.removeFirstElement();
             fail("This should throw the exception");
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {// ok
             e.printStackTrace();
         }
     }
@@ -101,7 +145,7 @@ public class LinkedListTest {
         try {
             list.removeFirstElement();
             fail("This should throw the exception");
-        } catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) { //ok
             e.printStackTrace();
         }
     }
@@ -118,7 +162,6 @@ public class LinkedListTest {
         } catch (NoSuchElementException e) { // ok
             e.printStackTrace();
         }
-
     }
 
     @Test
@@ -157,26 +200,37 @@ public class LinkedListTest {
 
         i.add(second);
         assertSame(second, list.getFirstElement());
-        assertSame(second,list.getLastElement());
+        assertSame(second, list.getLastElement());
         assertFalse(i.hasNext());
 
-        i = list.getIterator(); //Go to head add an element after the first  [ 1 ] -> [ 1, 2 ]
+        i = list.getIterator(); //Go to head, add an element after the first  [ 1 ] -> [ 1, 2 ]
         i.add(first);
         assertSame(first, list.getFirstElement());
         assertTrue(i.hasNext());
         assertSame(second, i.next());
         assertFalse(i.hasNext());
 
-        i = list.getIterator(); //Go to beginning, skip and  add an 2 elements  [ 3, 4 ] -> [ 1, 2, 3 , 4 ]
+        i = list.getIterator(); //Go to beginning, skip and  add an element  [ 1, 2 ] -> [ 1, 2, 3 ]
         assertTrue(i.hasNext());
         assertSame(first, i.next());
         assertTrue(i.hasNext());
         assertSame(second, i.next());
         i.add(third);
         assertFalse(i.hasNext());
+
+        i = list.getIterator(); //Go to beginning, skip 3 times and  add an element  [ 1, 2, 3] -> [ 1, 2, 3, 4 ]
+        assertTrue(i.hasNext());
+        assertSame(first, i.next());
+        assertTrue(i.hasNext());
+        assertSame(second, i.next());
+        assertTrue(i.hasNext());
+        assertSame(third, i.next());
+        assertFalse(i.hasNext());
         i.add(fifth);
         assertFalse(i.hasNext());
-
     }
+
+    @Test
+    public void remove(){}
 
 }
